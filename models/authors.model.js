@@ -1,5 +1,5 @@
 //const { Pool } = require('pg');
-const queries = require('./queries')
+const queries = require("../queries/authors.queries")
 const pool = require('../config/db_pgsql')//accede al fichero este que es el que accede al .env donde está la info
 
 
@@ -34,12 +34,12 @@ const getAllAuthors = async () => {
     return result
 }
 // CREATE ACABAR
-/*const createAuthor = async (author) => {
-    const {name, email, author_id} = entry;
+const createAuthor = async (infoAutor) => {
+    const {name, surname, email, image} = infoAutor
     let client, result;
     try {
         client = await pool.connect(); // Espera a abrir conexion
-        const data = await client.query(queries.createEntry,[title, content, email, category])
+        const data = await client.query(queries.createAuthor,[name, surname, email, image])
         result = data.rowCount
     } catch (err) {
         console.log(err);
@@ -48,16 +48,47 @@ const getAllAuthors = async () => {
         client.release();
     }
     return result
-}*/
+}
 // DELETE
+const deleteAuthor = async (emailInjection) => {
+    const {email} = emailInjection
+    let client, result;
+    try {
+        client = await pool.connect(); // Espera a abrir conexion
+        const data = await client.query(queries.deleteAuthor,[email])
+        result = data.rowCount
+    } catch (err) {
+        console.log(err);
+        throw err;
+    } finally {
+        client.release();
+    }
+    return result
+}
 //UPDATE
-const auhtors = {
+const updateAuthor = async (infoAutor) => {
+    const {image, email} = infoAutor
+    let client, result;
+    try {
+        client = await pool.connect(); // Espera a abrir conexion
+        const data = await client.query(queries.updateAuthor,[image, email])
+        result = data.rowCount
+    } catch (err) {
+        console.log(err);
+        throw err;
+    } finally {
+        client.release();
+    }
+    return result
+}
+
+const authors = {
     getAuthorsByEmail,
     getAllAuthors,
     createAuthor,
-    //deleteEntry
-    //updateEntry
+    deleteAuthor,
+    updateAuthor
 }
-module.exports = auhtors;
+module.exports = authors;
 // Pruebas
 

@@ -1,4 +1,5 @@
 const express = require('express')
+const cowsay = require('cowsay')
 const app = express()
 const port = 3000
 
@@ -27,8 +28,8 @@ app.get('/', (req, res) => {
   })
 
   // Rutas
-  app.use('/api/entries',entriesApiRoutes);
-  app.use('/api/authors',authorsApiRoutes);
+  app.use('/',entriesApiRoutes);
+  app.use('/',authorsApiRoutes);
   // opciones: /api/entries te da todo y /api/entries?email="correo" te da solo lo de ese correo
   
 

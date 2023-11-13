@@ -40,9 +40,26 @@ const createEntry = async (req, res) => {
     });
 }
 
+const updateEntry = async (req, res) => {
+    const changeEntry = req.body; // {name,surname,email,image}
+    const response = await entry.updateEntry(changeEntry);//esto accede a authors.models y llama a esa funcion allí
+    res.status(201).json({
+        "items_changed": response,
+        data: changeEntry
+    });
+}
+
+const deleteEntry = async (req, res) => {
+    const deleteEntry = req.body; 
+    const response = await entry.deleteEntry(deleteEntry);
+    res.status(201).json({
+        "items_deleted": response,
+        data: deleteEntry
+    });
+}
 module.exports = {
     getEntries,
     createEntry,
-    //deleteEntry, --> DELETE
-    //updateEntry --> PUT
+    deleteEntry,
+    updateEntry
 }
